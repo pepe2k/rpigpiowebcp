@@ -6,7 +6,7 @@ About
 
 This is a simple and light web control panel for manipulating GPIO ports in **Raspberry Pi**.
 
-![RPi GPIO Web Control Panel ver. 1.0](http://www.tech-blog.pl/wordpress/wp-content/uploads/2012/12/rpigpiowebcp_v1sm.jpg)
+![RPi GPIO Web Control Panel ver. 1.0](http://www.tech-blog.pl/wordpress/wp-content/uploads/2012/12/rpigpiowebcp_v1b.jpg)
 
 It is based on:
 
