@@ -66,6 +66,7 @@
 		</section>
 <% } %>
 		<hr />
+<% bcm2835_close(); %>
 <% } %>
 		<section id="notifications">
 			<h2>Ostatnie zdarzenia</h2>
