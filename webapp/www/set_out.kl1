@@ -1,0 +1,71 @@
+<%!
+	#include <stdlib.h>
+	#include <string.h>
+	#include <bcm2835.h>
+	#include <rpigpiowebcp.h>
+%><%
+	int i = 0;
+	int found = 0;
+	
+	int pin_num;
+	int pin_val;
+	
+	// get GET params
+	const char* get_pin_num = request_get_getarg( request, "pin" );
+	const char* get_pin_val = request_get_getarg( request, "val" );
+	
+	// resposne type: application/json
+	response_set_content_type( response, "application/json; charset=utf-8" );
+	
+	// check GET params
+	if( get_pin_num != NULL && get_pin_val != NULL ){
+	
+		// convert them to int
+		pin_num = atoi( get_pin_num );
+		pin_val = atoi( get_pin_val );
+		
+		if( strlen( get_pin_val ) == 1 && ( get_pin_val[0] == '0' || get_pin_val[0] == '1' ) ){
+
+			if ( bcm2835_init() ){
+
+				if( gpio_outs_num > 0 ){
+					
+					for( i = 0; i < gpio_outs_num; i++ ){
+						
+						if( gpio_outs[i].number == pin_num ){
+							found = 1;
+							break;
+						}
+						
+					}
+					
+					if( found ){
+						
+						// set...
+						bcm2835_gpio_write( pin_num, pin_val );
+						
+						// ...and return status
+						io_printf( out, "{\"error\": 0, \"gpio\": [{\"num\": %d, \"val\": %d}]}", pin_num, bcm2835_gpio_lev(pin_num) );
+						
+					} else {
+						io_printf( out, "{\"error\": 1, \"error_desc\": \"Wybrany GPIO nie znajduje się w tablicy portów zdefiniowanych jako wyjście.\"}" );
+					}
+					
+				} else {
+					io_printf( out, "{\"error\": 1, \"error_desc\": \"Nie zdefiniowano żadnych portów GPIO w trybie wyjścia.\"}" );
+				}
+				
+				bcm2835_close();
+				
+			} else {
+				io_printf( out, "{\"error\": 1, \"error_desc\": \"Inicjalizacja biblioteki bcm2835 nie powiodła się.\"}");
+			}
+		
+		} else {
+			io_printf( out, "{\"error\": 1, \"error_desc\": \"Nieprawidłowa wartość parametru val.\"}");
+		}
+
+	} else {
+		io_printf( out, "{\"error\": 1, \"error_desc\": \"Nieprawidłowe lub brak parametrów w GET.\"}");
+	}
+%>

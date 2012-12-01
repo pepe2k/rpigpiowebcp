@@ -1,0 +1,184 @@
+html{font-size: 62.5%;}
+body{
+	background-color: #EEE;
+	color: #2F2F2F;
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	font-size: 1.4rem;
+	line-height: 1;
+}
+
+a, a:link, a:visited{
+	color: #428CE6;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #2F2F2F;
+	text-decoration: underline;
+}
+
+a:active{
+	color: #EB2525;
+	text-decoration: none;
+}
+
+#wrapper{
+	background-color: #FFF;
+	border: solid 1px #DEDEDE;
+	margin: 5rem auto 1rem;
+	padding: 2.5rem;
+	width: 60%;
+	-moz-box-shadow: 0 0 10px #D7D7D7;
+	-webkit-box-shadow: 0 0 10px #D7D7D7;
+	box-shadow: 0 0 10px #D7D7D7;
+}
+
+footer{
+	font-size: 1.1rem;
+	line-height: 1.6rem;
+	margin: 0 auto 1.5rem auto;
+	padding: 0 2.5rem;
+	width: 60%;
+}
+
+hr{
+	border: 0;
+	border-top: 1px solid #E7E7E7;
+	clear: both;
+	height: 1px;
+	margin: 0;
+	padding: 0;
+}
+
+h1, h2, strong{font-weight: 700;}
+h1{font-size: 1.8rem;}
+h2{font-size: 1.5rem;}
+
+#inputs, #outputs{width: 50%;}
+#inputs{text-align: right;}
+
+#inputs .list{padding-right: 1.5rem;}
+#outputs .list{padding-left: 1.5rem;}
+
+#outputs, #inputs .slider, #inputs .name, #inputs .slider .inset .label{float: right;}
+#inputs, #outputs .slider, #outputs .name, #outputs .slider .inset .label{float: left;}
+
+.gpio, h1, h2, .info, hr{margin-bottom: 2rem;}
+.gpio{line-height: 3.2rem;}
+
+#outputs .name{margin-left: 1.5rem;}
+#inputs .name{margin-right: 1.5rem;}
+
+.slider{
+	border: 1px solid #919191;
+	color: #FFF;
+	font-weight: 700;
+	line-height: 3rem;
+	overflow: hidden;
+	text-align: center;
+	text-shadow: 0 0 .3rem rgba(0, 0, 0, 0.5);
+	width: 100px;
+}
+
+.slider .inset{position: relative;}
+
+.slider .inset .label{
+	box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.15);
+	width: 50%;
+}
+
+.gpio.true .slider .inset{background-color: #60ae3d;}
+.gpio.false .slider .inset{background-color: #808080;}
+
+.slider .inset .control{
+	background: #F7F7F7;
+	box-shadow: inset 2px -2px 5px 0 rgba(0, 0, 0, 0.1), inset -2px 2px 5px 0 rgba(255, 255, 255, 0.1);
+	height: 100%;
+	position: absolute;
+	top: 0;
+	width: 50%;
+}
+
+.gpio.false .slider .inset .control{border: 0 solid #4D4D4D;}
+.gpio.true .slider .inset .control{border: 0 solid #2C8136;}
+
+#outputs .gpio.false .slider .inset .control{
+	border-width: 0 1px 0 0;
+	left: 0;
+}
+
+#outputs .gpio.true .slider .inset .control{
+	border-width: 0 0 0 1px;
+	right: 0;
+}
+
+#inputs .gpio.false .slider .inset .control{
+	border-width: 0 0 0 1px;
+	right: 0;
+}
+
+#inputs .gpio.true .slider .inset .control{
+	border-width: 0 1px 0 0;
+	left: 0;
+}
+
+#outputs .slider:hover .inset .control{background: #FFF;}
+#outputs .slider:hover{cursor: pointer;}
+
+#notifications li{
+	font-size: 1rem;
+	line-height: 1.5rem;
+	margin-bottom: 1rem;
+	padding: .5rem 1rem;
+}
+
+#notifications li:last-child{margin: 0;}
+#notifications li span{margin-right: 1rem;}
+
+#notifications li.success{
+	background: #f7fff2;
+	background: -moz-linear-gradient(top,  #f7fff2 0%, #e6ffd3 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f7fff2), color-stop(100%,#e6ffd3));
+	background: -webkit-linear-gradient(top,  #f7fff2 0%,#e6ffd3 100%);
+	background: -o-linear-gradient(top,  #f7fff2 0%,#e6ffd3 100%);
+	background: -ms-linear-gradient(top,  #f7fff2 0%,#e6ffd3 100%);
+	background: linear-gradient(to bottom,  #f7fff2 0%,#e6ffd3 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#f7fff2', endColorstr='#e6ffd3',GradientType=0 );
+	border: solid 1px #D5FFB0;
+	color: #0CA200;
+}
+
+#notifications li.error{
+	background: #fff2f2;
+	background: -moz-linear-gradient(top,  #fff2f2 0%, #ffe5e5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff2f2), color-stop(100%,#ffe5e5));
+	background: -webkit-linear-gradient(top,  #fff2f2 0%,#ffe5e5 100%);
+	background: -o-linear-gradient(top,  #fff2f2 0%,#ffe5e5 100%);
+	background: -ms-linear-gradient(top,  #fff2f2 0%,#ffe5e5 100%);
+	background: linear-gradient(to bottom,  #fff2f2 0%,#ffe5e5 100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#fff2f2', endColorstr='#ffe5e5',GradientType=0 );
+	border: solid 1px #FFD3D3;
+	color: #CF0000;
+}
+
+.indicator{
+	background-color: #FFF;
+	border: solid 1px #DEDEDE;
+	box-shadow: 0 0 10px #D7D7D7;
+	height: .5rem;
+	width: 100px;
+	-moz-box-shadow: 0 0 10px #D7D7D7;
+	-webkit-box-shadow: 0 0 10px #D7D7D7;
+}
+
+.indicator > span{
+	background-color: #428CE6;
+	box-shadow: inset 2px -2px 5px rgba(0, 0, 0, 0.15);
+	display: block;
+	height: 100%;
+	width: 10%;
+}
+
+.floatl{float: left;}
+.floatr{float: right;}
+.clear{clear: both;}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<%!
+	#include <stdlib.h>
+	#include <string.h>
+	#include <bcm2835.h>
+	#include <rpigpiowebcp.h>
+%><%
+	int i = 0;
+%><html lang="pl">
+<head>
+	<title>RPi GPIO Web Control Panel <% io_printf( out, "%s", RPIGPIOWEBCP_VERSION ); %> - <% io_printf( out, "%s", request_get_addr(request) ); %></title>
+	<meta charset="UTF-8" />
+	<meta name="author" content="Piotr Dymacz, www.tech-blog.pl" />
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext" />
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+	<section id="wrapper">
+		<header>
+			<h1 class="floatl">RPi GPIO Web Control Panel <% io_printf( out, "%s", RPIGPIOWEBCP_VERSION ); %></h1>
+			<h1 class="floatr"><% io_printf( out, "%s", request_get_addr(request) ); %></h1>
+			<hr />
+		</header>
+<% if ( bcm2835_init() ){ %>
+<% if( gpio_ins_num > 0 ) { %>
+		<section id="inputs">
+			<div class="list">
+				<h1>Wejścia (<% io_printf( out, "%d", gpio_ins_num ); %>)</h1>
+<% for( i = 0; i < gpio_ins_num; i++ ){ %>
+				<div class="gpio <% if( bcm2835_gpio_lev(gpio_ins[i].number) == HIGH ){ %>true<% } else { %>false<% } %>" id="gpio_<% io_printf( out, "%d", gpio_ins[i].number ); %>">
+					<div class="slider">
+						<div class="inset">
+							<div class="label">ON</div>
+							<div class="label">OFF</div>
+							<div class="control"></div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="name"><% if( strlen(gpio_ins[i].name) ){ io_printf( out, "%s", gpio_ins[i].name ); } else { %>GPIO numer <% io_printf( out, "%d", gpio_ins[i].number ); } %></div>
+					<div class="clear"></div>
+				</div>
+<% } %>
+			</div>
+		</section>
+<% } %>
+<% if( gpio_outs_num > 0 ) { %>
+		<section id="outputs">
+			<div class="list">
+				<h1>Wyjścia (<% io_printf( out, "%d", gpio_outs_num ); %>)</h1>
+<% for( i = 0; i < gpio_outs_num; i++ ){ %>
+				<div class="gpio <% if( bcm2835_gpio_lev(gpio_outs[i].number) == HIGH ){ %>true<% } else { %>false<% } %>" id="gpio_<% io_printf( out, "%d", gpio_outs[i].number ); %>">
+					<div class="slider">
+						<div class="inset">
+							<div class="label">ON</div>
+							<div class="label">OFF</div>
+							<div class="control"></div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="name"><% if( strlen(gpio_outs[i].name) ){ io_printf( out, "%s", gpio_outs[i].name ); } else { %>GPIO numer <% io_printf( out, "%d", gpio_outs[i].number ); } %></div>
+					<div class="clear"></div>
+				</div>
+<% } %>
+			</div>
+		</section>
+<% } %>
+		<hr />
+<% } %>
+		<section id="notifications">
+			<h2>Ostatnie zdarzenia</h2>
+			<ul></ul>
+		</section>
+	</section>
+	
+	<footer>
+		<div class="floatl">Lokalny IP: <strong><% io_printf( out, "%s", request_get_addr(request) ); %></strong> / połączenie z IP: <strong><% io_printf(out, "%s", request_get_peer_addr(request)); %></strong><br />Sprawdź: <a href="http://www.tech-blog.pl" title="Strona internetowa autora: www.tech-blog.pl" target="_blank">tech-blog</a> / <a href="http://www.raspberrypi.org/" title="Strona internetowa fundacji Raspberry Pi" target="_blank">Raspberry Pi</a> / <a href="http://www.koanlogic.com/klone/" title="Serwer KLone" target="_blank">serwer KLone</a></div>
+		<div class="floatr"><div class="indicator"><span></span></div></div>
+		<div class="clear"></div>
+	</footer>
+
+	<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script src="js/engine.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<%!
+	#include <bcm2835.h>
+	#include <rpigpiowebcp.h>
+%><%
+	int i = 0;
+	
+	// resposne type: application/json
+	response_set_content_type( response, "application/json; charset=utf-8" );
+	
+	if ( bcm2835_init() ){
+			
+		io_printf( out, "{\"error\": 0, \"gpio\": [" );
+		
+		// get status for all defined GPIOs
+		// bcm2835_gpio_lev() works in both modes (input/output)
+		
+		// GPIOs in output mode
+		for( i = 0; i < gpio_outs_num; i++ ){
+			
+			io_printf( out, "{" );
+			
+			io_printf( out, "\"num\": %d,", gpio_outs[i].number );
+			io_printf( out, "\"val\": %d", bcm2835_gpio_lev(gpio_outs[i].number) );
+			
+			io_printf( out, "}" );
+			
+			if( i < gpio_outs_num - 1 ){
+				io_printf( out, "," );
+			}
+		}
+		
+		if( gpio_outs_num > 0 && gpio_ins_num > 0 ){
+			io_printf( out, "," );
+		}
+		
+		// GPIOs in input mode
+		for( i = 0; i < gpio_ins_num; i++ ){
+			
+			io_printf( out, "{" );
+			
+			io_printf( out, "\"num\": %d,", gpio_ins[i].number );
+			io_printf( out, "\"val\": %d", bcm2835_gpio_lev(gpio_ins[i].number) );
+			
+			io_printf( out, "}" );
+			
+			if( i < gpio_ins_num - 1 ){
+				io_printf( out, "," );
+			}
+		}
+		
+		io_printf( out, "]}" );
+		
+		bcm2835_close();
+		
+	} else {
+		io_printf( out, "{\"error\": 1, \"error_desc\": \"Inicjalizacja biblioteki bcm2835 nie powiodła się.\"}");
+	}
+%>
